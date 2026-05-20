@@ -1,42 +1,49 @@
 #include <iostream>
 #include <string>
 #include <stdexcept>
+#include "randfuncs.h"
 
-// Partner's function — defined below by partner
-int rand();
+using namespace std;
 
 double add(double a, double b) { return a + b; }
 double subtract(double a, double b) { return a - b; }
 double multiply(double a, double b) { return a * b; }
 double divide(double a, double b) {
-    if (b == 0) throw std::invalid_argument("Division by zero");
+    if (b == 0) throw invalid_argument("Division by zero");
     return a / b;
 }
 
 void runMath(double a, double b) {
-    std::cout << a << " + " << b << " = " << add(a, b) << "\n";
-    std::cout << a << " - " << b << " = " << subtract(a, b) << "\n";
-    std::cout << a << " * " << b << " = " << multiply(a, b) << "\n";
+    cout << a << " + " << b << " = " << add(a, b) << "\n";
+    cout << a << " - " << b << " = " << subtract(a, b) << "\n";
+    cout << a << " * " << b << " = " << multiply(a, b) << "\n";
     try {
-        std::cout << a << " / " << b << " = " << divide(a, b) << "\n";
-    } catch (const std::invalid_argument &e) {
-        std::cerr << "Error: " << e.what() << "\n";
+        cout << a << " / " << b << " = " << divide(a, b) << "\n";
+    } catch (const invalid_argument &e) {
+        cerr << "Error: " << e.what() << "\n";
     }
 }
 
 int main(int argc, char *argv[]) {
-    bool useRandom = (argc >= 2 && std::string(argv[1]) == "-r");
+    string flag = (argc >= 2) ? argv[1] : "";
 
-    double a, b;
-    if (useRandom) {
-        a = rand();
-        b = rand();
-        std::cout << "Using random numbers: " << a << " and " << b << "\n";
+    if (flag == "-c") {
+        flip_coin();
+    } else if (flag == "-d6") {
+        roll_d6();
+    } else if (flag == "-d20") {
+        roll_d20();
+    } else if (flag == "-r") {
+        double a = intrand(100) + 1;
+        double b = intrand(100) + 1;
+        cout << "Random numbers: " << a << " and " << b << "\n";
+        runMath(a, b);
     } else {
-        std::cout << "Enter two numbers: ";
-        std::cin >> a >> b;
+        double a, b;
+        cout << "Enter two numbers: ";
+        cin >> a >> b;
+        runMath(a, b);
     }
 
-    runMath(a, b);
     return 0;
 }
