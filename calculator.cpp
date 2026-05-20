@@ -1,9 +1,28 @@
 #include <iostream>
 #include <string>
 #include <stdexcept>
-#include "randfuncs.h"
+#include <cstdlib>
 
 using namespace std;
+
+int intrand(int max) {
+    return rand() % max;
+}
+
+void flip_coin() {
+    if (intrand(2) == 0)
+        cout << "heads" << endl;
+    else
+        cout << "tails" << endl;
+}
+
+void roll_d6() {
+    cout << "d6: " << intrand(6) + 1 << endl;
+}
+
+void roll_d20() {
+    cout << "d20: " << intrand(20) + 1 << endl;
+}
 
 double add(double a, double b) { return a + b; }
 double subtract(double a, double b) { return a - b; }
